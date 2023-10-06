@@ -1,20 +1,30 @@
 export function twoSum(lista: Array<number>, result: number): boolean {
     let segundaLista = lista.slice(1)
-    console.log('primeira lista', lista)
-    console.log('segunda lista', segundaLista)
+    let indexEncontrados: Array<number> = []
+    let numerosEncontrados: Array<number> = []
 
     lista.forEach((numero, index) => {
-        let segundoIndice: number = 0
-        while(segundaLista.length >= 1) {
-            let somaValoresIndices = numero + segundaLista[segundoIndice]
-
-            if (somaValoresIndices === result) {
-                console.log(`Os números da soma são: ${numero} e ${segundaLista[segundoIndice]}`)
-                return true
-            }
-            segundaLista.shift()
+        let segundaListaModificada = segundaLista.slice(index)
+        if (segundaListaModificada.length == 0) {
+            return
         }
-        segundaLista.slice(index + 1)
+        segundaListaModificada.forEach((segundoNumero, segundoIndex) => {
+            let soma: number = numero + segundoNumero
+            if (soma === result) {
+                numerosEncontrados.push(numero)
+                numerosEncontrados.push(segundoNumero)
+                indexEncontrados.push(index)
+                indexEncontrados.push(index + segundoIndex + 1)
+                return
+            }
+        })
     })
-    return true
+
+    if(numerosEncontrados.length >= 1) {
+        console.log(`Os números que dão ${result} são ${numerosEncontrados[0]} e ${numerosEncontrados[1]}`)
+        console.log(`As posições são ${indexEncontrados[0]} e ${indexEncontrados[1]}`)
+        console.log(`Lista original ${lista}`)
+        return true
+    }
+    return false
 }
